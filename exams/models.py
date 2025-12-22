@@ -23,7 +23,7 @@ class Exam(models.Model):
 class Question(models.Model):
     exam = models.ForeignKey(Exam, on_delete=models.CASCADE)
     question_text = models.TextField(blank=True)
-    question_image = models.ImageField(upload_to='questions/', blank=True, null=True)
+
 
     option1 = models.CharField(max_length=255, blank=True)
     option2 = models.CharField(max_length=255, blank=True)
