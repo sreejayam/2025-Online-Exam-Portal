@@ -1,0 +1,31 @@
+<h2>Register</h2>
+
+{% if messages %}
+  {% for message in messages %}
+    <p style="color:red;">{{ message }}</p>
+  {% endfor %}
+{% endif %}
+
+<form method="post">
+  {% csrf_token %}
+  <p>
+    <label>Username:</label><br>
+    <input type="text" name="username" required>
+  </p>
+  <p>
+    <label>Email:</label><br>
+    <input type="email" name="email" required>
+  </p>
+  <p>
+    <label>Password:</label><br>
+    <input type="password" name="password" required>
+  </p>
+  <p>
+    <label>Confirm Password:</label><br>
+    <input type="password" name="password2" required>
+  </p>
+
+  <button type="submit">Register</button>
+</form>
+
+<p>Already have an account? <a href="/login/">Login here</a></p>

@@ -1,0 +1,13 @@
+<h2>Search Exam Result</h2>
+
+<form method="get">
+  <input type="text" name="result_id" placeholder="Enter Result ID">
+  <button type="submit">Search</button>
+</form>
+
+{% if result %}
+  <p>Exam: {{ result.exam.title }}</p>
+  <p>Score: {{ result.score }} / {{ result.total }}</p>
+{% elif request.GET.result_id %}
+  <p>No result found</p>
+{% endif %}

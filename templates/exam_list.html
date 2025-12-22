@@ -1,0 +1,15 @@
+<h2>Available Exams</h2>
+
+<ul>
+  {% for exam in exams %}
+    <li>
+      {{ exam.title }}
+      ({{ exam.duration_minutes }} mins)
+      <a href="/exam/{{ exam.id }}/">Start</a>
+    </li>
+  {% empty %}
+    <li>No exams available</li>
+  {% endfor %}
+</ul>
+
+<a href="/">Back to Home</a>

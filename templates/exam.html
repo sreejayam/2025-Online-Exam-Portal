@@ -1,0 +1,32 @@
+<h3>{{ exam.title }}</h3>
+<p>Time Left: <span id="timer"></span></p>
+
+<form method="post" id="examForm">
+  {% csrf_token %}
+  {% for q in questions %}
+    <p>{{ q.question_text }}</p>
+    <input type="radio" name="{{ q.id }}" value="1"> {{ q.option1 }}<br>
+    <input type="radio" name="{{ q.id }}" value="2"> {{ q.option2 }}<br>
+    <input type="radio" name="{{ q.id }}" value="3"> {{ q.option3 }}<br>
+    <input type="radio" name="{{ q.id }}" value="4"> {{ q.option4 }}<br>
+    <hr>
+  {% endfor %}
+  <button type="submit">Submit Exam</button>
+</form>
+
+<script>
+let time = {{ exam.duration_minutes }} * 60;
+
+const timer = setInterval(() => {
+    let minutes = Math.floor(time / 60);
+    let seconds = time % 60;
+    document.getElementById('timer').innerHTML =
+        minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
+
+    time--;
+    if (time < 0) {
+        clearInterval(timer);
+        document.getElementById("examForm").submit();
+    }
+}, 1000);
+</script>
