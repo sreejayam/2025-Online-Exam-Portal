@@ -91,9 +91,15 @@
     </style>
 </head>
 <body>
-<header>
-    <h1>Welcome to Online Exam Portal</h1>
+<header style="display:flex; justify-content:space-between; align-items:center;">
+    <h1>Online Exam Portal</h1>
+    <div>
+        Hi, <b>{{ request.user.username }}</b>
+        |
+        <a href="/logout/" style="color:white; text-decoration:underline;">Logout</a>
+    </div>
 </header>
+
 
 <main>
 
