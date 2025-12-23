@@ -108,17 +108,17 @@
       {% endfor %}
     </ul>
 
-    <!-- Last exam result -->
-    {% if latest_result %}
-        <div class="result-box">
-            <h3>Your Last Exam</h3>
-            <p><b>Exam:</b> {{ latest_result.exam.title }}</p>
-            <p><b>Exam ID:</b> <span class="exam-id">{{ latest_result.result_id }}</span></p>
-            <p><b>Score:</b> {{ latest_result.score }} / {{ latest_result.total }}</p>
-        </div>
-    {% endif %}
-
-    <hr>
+ {% if user_results %}
+  <ul>
+    {% for res in user_results %}
+      <li style="color:green;">
+        {{ res.result_id }}
+      </li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <p>No exams attempted yet.</p>
+{% endif %}
 
     <!-- Search by Exam ID -->
     <h3>Search Result by Exam ID</h3>

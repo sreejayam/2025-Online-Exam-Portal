@@ -2,37 +2,21 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from .models import Subject, Exam, Question
-from results.models import ExamResult
-import random
 
 from results.models import ExamResult
 
-# @login_required
-# def home(request):
-#     subjects = Subject.objects.all()
-#     result = None
-#
-#     if request.GET.get('result_id'):
-#         result = ExamResult.objects.filter(
-#             result_id=request.GET['result_id']
-#         ).first()
-#
-#     return render(request, 'home.html', {
-#         'subjects': subjects,
-#         'result': result
-#     })
-from results.models import ExamResult
+
 
 @login_required
 def home(request):
     subjects = Subject.objects.all()
 
-    # ✅ latest exam attempt of logged-in user
-    latest_result = ExamResult.objects.filter(
+    #  ALL exam attempts by logged-in user
+    user_results = ExamResult.objects.filter(
         user=request.user
-    ).order_by('-completed_at').first()
+    ).order_by('-completed_at')
 
-    # ✅ search by exam ID (optional)
+    #  search by exam ID
     searched_result = None
     if request.GET.get('result_id'):
         searched_result = ExamResult.objects.filter(
@@ -41,7 +25,7 @@ def home(request):
 
     return render(request, 'home.html', {
         'subjects': subjects,
-        'latest_result': latest_result,
+        'user_results': user_results,
         'result': searched_result
     })
 
@@ -62,7 +46,7 @@ def exam_list(request, subject_id):
 def start_exam(request, exam_id):
     exam = get_object_or_404(Exam, id=exam_id)
 
-    # ✅ get all questions
+    #  get all questions
     all_questions = list(Question.objects.filter(exam=exam))
 
     if not all_questions:
@@ -72,10 +56,10 @@ def start_exam(request, exam_id):
             'error': 'No questions available for this exam.'
         })
 
-    # ✅ ensure no overflow
+    #  ensure no overflow
     question_count = min(exam.total_questions, len(all_questions))
 
-    # ✅ slice instead of random.sample (SAFE)
+    # slice instead of random.sample (SAFE)
     questions = all_questions[:question_count]
 
     if request.method == "POST":

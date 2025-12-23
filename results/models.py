@@ -10,7 +10,7 @@ class ExamResult(models.Model):
     score = models.PositiveIntegerField()
     total = models.PositiveIntegerField()
 
-    # ✅ renamed field
+
     result_id = models.UUIDField(default=uuid.uuid4, unique=True, editable=False)
 
     completed_at = models.DateTimeField(auto_now_add=True)

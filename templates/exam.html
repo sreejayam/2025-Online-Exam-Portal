@@ -1,16 +1,81 @@
+
 <h3>{{ exam.title }}</h3>
-<p>Time Left: <span id="timer"></span></p>
+<p><b>Time Left:</b> <span id="timer"></span></p>
 
 <form method="post" id="examForm">
   {% csrf_token %}
+
   {% for q in questions %}
-    <p>{{ q.question_text }}</p>
-    <input type="radio" name="{{ q.id }}" value="1"> {{ q.option1 }}<br>
-    <input type="radio" name="{{ q.id }}" value="2"> {{ q.option2 }}<br>
-    <input type="radio" name="{{ q.id }}" value="3"> {{ q.option3 }}<br>
-    <input type="radio" name="{{ q.id }}" value="4"> {{ q.option4 }}<br>
+    <div class="question-box" style="margin-bottom:25px;">
+
+      <!-- Question text -->
+      {% if q.question_text %}
+        <p><b>{{ forloop.counter }}. {{ q.question_text }}</b></p>
+      {% endif %}
+
+      <!-- Question image -->
+      {% if q.image %}
+        <div style="margin-bottom:10px;">
+          <img src="{{ q.image.url }}" style="max-width:300px; display:block;">
+        </div>
+      {% endif %}
+
+      <!-- Option 1 -->
+      <div style="margin-bottom:8px;">
+        <label>
+          <input type="radio" name="{{ q.id }}" value="1">
+          {% if q.option1 %} {{ q.option1 }} {% endif %}
+        </label>
+        {% if q.option1_image %}
+          <div>
+            <img src="{{ q.option1_image.url }}" width="120">
+          </div>
+        {% endif %}
+      </div>
+
+      <!-- Option 2 -->
+      <div style="margin-bottom:8px;">
+        <label>
+          <input type="radio" name="{{ q.id }}" value="2">
+          {% if q.option2 %} {{ q.option2 }} {% endif %}
+        </label>
+        {% if q.option2_image %}
+          <div>
+            <img src="{{ q.option2_image.url }}" width="120">
+          </div>
+        {% endif %}
+      </div>
+
+      <!-- Option 3 -->
+      <div style="margin-bottom:8px;">
+        <label>
+          <input type="radio" name="{{ q.id }}" value="3">
+          {% if q.option3 %} {{ q.option3 }} {% endif %}
+        </label>
+        {% if q.option3_image %}
+          <div>
+            <img src="{{ q.option3_image.url }}" width="120">
+          </div>
+        {% endif %}
+      </div>
+
+      <!-- Option 4 -->
+      <div style="margin-bottom:8px;">
+        <label>
+          <input type="radio" name="{{ q.id }}" value="4">
+          {% if q.option4 %} {{ q.option4 }} {% endif %}
+        </label>
+        {% if q.option4_image %}
+          <div>
+            <img src="{{ q.option4_image.url }}" width="120">
+          </div>
+        {% endif %}
+      </div>
+
+    </div>
     <hr>
   {% endfor %}
+
   <button type="submit">Submit Exam</button>
 </form>
 
